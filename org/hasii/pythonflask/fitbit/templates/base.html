@@ -1,0 +1,83 @@
+<html>
+    <head>
+        {% if title %}
+            <title>{{ title }} - Fitbit Records</title>
+        {% else %}
+            <title>Welcome to your fitbit data</title>
+        {% endif %}
+        <style type="text/css">
+            body {
+                font-family: "Lucida Sans Unicode", "Lucida Grande", "Segoe Ui";
+            }
+            /* Table */
+            .fitbit-table {
+                border-collapse: collapse;
+                font-size: 13px;
+            }
+            .fitbit-table th,
+            .fitbit-table td {
+                border: 1px solid #e1edff;
+                padding: 7px 17px;
+            }
+            .fitbit-table .title {
+                caption-side: bottom;
+                margin-top: 12px;
+            }
+            /* Table Header */
+            .fitbit-table thead th {
+                background-color: #508abb;
+                color:            #FFFFFF;
+                border-color:     #6ea1cc;
+                text-align:       left;
+                ! text-transform:   uppercase;
+            }
+            /* Table Body */
+            .fitbit-table tbody td {
+                color: #353535;
+            }
+            .fitbit-table tbody td:first-child,
+            .fitbit-table tbody td:last-child,
+            .fitbit-table tbody td:nth-child(4) {
+                text-align: left;
+            }
+            .fitbit-table tbody tr:nth-child(odd) td {
+                background-color: #f4fbff;
+            }
+            .fitbit-table tbody tr:hover td {
+                background-color: #ffffa2;
+                border-color: #ffff0f;
+                transition: all .2s;
+            }
+
+            /* Table Footer */
+            .fitbit-table tfoot th {
+                background-color: #e5f5ff;
+            }
+            .fitbit-table tfoot th:first-child {
+                text-align: left;
+            }
+            .fitbit-table tbody td:empty {
+                background-color: #ffcccc;
+            }
+        </style>
+    </head>
+    <body>
+        <div>FitBit Data:
+            <a href="{{ url_for('index') }}">Home</a>
+        </div>
+        <hr>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+        {% block content %}
+
+        {% endblock %}
+
+    </body>
+</html>
