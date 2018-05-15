@@ -54,3 +54,6 @@ class DBLoader(BaseTest):
                 csvfile.close()
 
             self.logger.info("Loaded %s records", recCount)
+
+if __name__ == '__main__':
+    unittest.main()
