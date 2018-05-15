@@ -8,5 +8,5 @@ logger = logging.getLogger(__name__)
 secret_key = "The secret key is: " + app.config['SECRET_KEY']
 logger.info("secret key: %s",secret_key)
 
-
-app.run()
+if __name__ == "__main__":
+    app.run()
