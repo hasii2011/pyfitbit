@@ -18,7 +18,19 @@ txEndUnder=$(tput rmul)   	# exit underline
 txReverse=$(tput rev)    	# reverse
 txStandout=$(tput smso)   	# standout
 txEndStand=$(tput rmso)   	# exit standout
-txReset=$(tput sgr0)   	# reset attributes
+txReset=$(tput sgr0)   	    # reset attributes
+
+function isValid() {
+
+    if [ $1 -gt 0 ]; then
+        printf "${fgRed}ERROR: ${2}${txReset}\n"
+        exit $2
+    else
+    	shift
+    	shift
+    	printf "${fgMagenta}$*: ${fgWhite}Ok\n"
+    fi
+}
 #
 # Assumes this script executes from root of project
 #
@@ -33,18 +45,21 @@ export LOG_CONFIG_PATH=`pwd`
 
 tput clear
 
-echo "Full Path:       ${fgWhite}$FULL_PATH${txReset}"
-echo "Flask App:       ${fgWhite}$FLASK_APP${txReset}"
-echo "DB Path:         ${fgWhite}$DB_PATH${txReset}"
-echo "Log Config Path: ${fgWhite}$LOG_CONFIG_PATH${txReset}"
+printf "Full Path:       ${fgWhite}%s${txReset}\n" $FULL_PATH
+printf "Flask App:       ${fgWhite}%s${txReset}\n" $FLASK_APP
+printf "DB Path:         ${fgWhite}%s${txReset}\n" $DB_PATH
+printf "Log Config Path: ${fgWhite}%s${txReset}\n" $LOG_CONFIG_PATH
 
-echo "Log Config Path: ${fgWhite}$LOG_CONFIG_PATH${txReset}"
-flask db init
 
-echo "Log Config Path: ${fgWhite}$LOG_CONFIG_PATH${txReset}"
-flask db migrate -m "FitBitRecord"
+flask db init &>/dev/null
+stat=$?
+isValid $stat 66 "Initialize Database"
 
-echo "Log Config Path: ${fgWhite}$LOG_CONFIG_PATH${txReset}"
-flask db upgrade
+flask db migrate -m "FitBitRecord" &>/dev/null
+stat=$?
+isValid $stat 77 "Create Migration Scripts"
 
+flask db upgrade &>/dev/null
+stat=$?
+isValid $stat 88 "Create Database"
 
