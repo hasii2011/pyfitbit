@@ -3,3 +3,5 @@
 /migration*/
 /venv-flask-3.7.3/
 *.*.pyc
+/.idea/
+*.db
