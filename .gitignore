@@ -1,3 +1,5 @@
 *.DS_Store
 /venv-pyflask/
 /migration*/
+/venv-flask-3.7.3/
+*.*.pyc

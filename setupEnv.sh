@@ -22,7 +22,7 @@ txReset=$(tput sgr0)   	    # reset attributes
 
 function isValid() {
 
-    if [ $1 -gt 0 ]; then
+    if [[ $1 -gt 0 ][; then
         printf "${fgRed}ERROR: ${2}${txReset}\n"
         exit $2
     else
@@ -31,14 +31,18 @@ function isValid() {
     	printf "${fgMagenta}$*: ${fgWhite}Ok\n"
     fi
 }
+function loadTestDB() {
+
+	printf "${txStandout}COMING SOON!! ${txEndStand}${txReset}\n"
+}
 #
 # Assumes this script executes from root of project
 #
-source ./venv-pyflask/bin/activate
+source ./venv-flask-3.7.3//bin/activate
 
 cd org/hasii/pythonflask/
 export FULL_PATH=`pwd`
-export FLASK_APP=$FULL_PATH/fitbitapp.py
+export FLASK_APP=${FULL_PATH}/fitbitapp.py
 cd -
 export DB_PATH=`pwd`
 export LOG_CONFIG_PATH=`pwd`
@@ -63,3 +67,16 @@ flask db upgrade &>/dev/null
 stat=$?
 isValid $stat 88 "Create Database"
 
+#
+# To load or not load;  That is the question
+#
+
+while true; do
+    read -p "Do you load the test seed data?" yn
+    case $yn in
+        [Yy]* ) loadTestDB;
+        		break;;
+        [Nn]* ) exit;;
+        * ) printf "${fgRed}Please answer yes or no.\n${txReset}";;
+    esac
+done
