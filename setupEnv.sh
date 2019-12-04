@@ -22,7 +22,7 @@ txReset=$(tput sgr0)   	    # reset attributes
 
 function isValid() {
 
-    if [[ $1 -gt 0 ][; then
+    if [[ $1 -gt 0 ]]; then
         printf "${fgRed}ERROR: ${2}${txReset}\n"
         exit $2
     else
