@@ -38,7 +38,7 @@ function loadTestDB() {
 #
 # Assumes this script executes from root of project
 #
-source ./venv-flask-3.7.3//bin/activate
+source ./pyvenv-3.8.2-pyflask/bin/activate
 
 cd org/hasii/pythonflask/
 export FULL_PATH=`pwd`
@@ -49,31 +49,32 @@ export LOG_CONFIG_PATH=`pwd`
 
 tput clear
 
-printf "Full Path:       ${fgWhite}%s${txReset}\n" $FULL_PATH
-printf "Flask App:       ${fgWhite}%s${txReset}\n" $FLASK_APP
-printf "DB Path:         ${fgWhite}%s${txReset}\n" $DB_PATH
-printf "Log Config Path: ${fgWhite}%s${txReset}\n" $LOG_CONFIG_PATH
+printf "Full Path:       ${fgWhite}%s${txReset}\n" ${FULL_PATH}
+printf "Flask App:       ${fgWhite}%s${txReset}\n" ${FLASK_APP}
+printf "DB Path:         ${fgWhite}%s${txReset}\n" ${DB_PATH}
+printf "Log Config Path: ${fgWhite}%s${txReset}\n" ${LOG_CONFIG_PATH}
 
+rm -rf migrations
 
 flask db init &>/dev/null
 stat=$?
-isValid $stat 66 "Initialize Database"
+isValid ${stat} 66 "Initialize Database"
 
 flask db migrate -m "FitBitRecord" &>/dev/null
 stat=$?
-isValid $stat 77 "Create Migration Scripts"
+isValid ${stat} 77 "Create Migration Scripts"
 
 flask db upgrade &>/dev/null
 stat=$?
-isValid $stat 88 "Create Database"
+isValid ${stat} 88 "Create Database"
 
 #
 # To load or not load;  That is the question
 #
 
 while true; do
-    read -p "Do you load the test seed data?" yn
-    case $yn in
+    read -p "Do you want load the test seed data?" yn
+    case ${yn} in
         [Yy]* ) loadTestDB;
         		break;;
         [Nn]* ) exit;;

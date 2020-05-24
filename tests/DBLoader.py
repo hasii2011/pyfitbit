@@ -3,10 +3,11 @@ import logging
 import csv
 import unittest
 
-from BaseTest import BaseTest
+from tests.BaseTest import BaseTest
 
 from org.hasii.pythonflask.fitbit import db
 from org.hasii.pythonflask.fitbit.models.FitBitRecord import FitBitRecord
+
 
 class DBLoader(BaseTest):
     """"""
@@ -26,7 +27,6 @@ class DBLoader(BaseTest):
         self.logger = logging.getLogger(__name__)
         self.baseDirectory = os.getcwd()
         self.dataDirectory = self.baseDirectory + "/" + DBLoader.DEFAULT_DATA_DIRECTORY + "/"
-
 
     def testLoadDB(self):
         """"""
@@ -55,6 +55,7 @@ class DBLoader(BaseTest):
                 csvfile.close()
 
             self.logger.info("Loaded %s records", recCount)
+
 
 if __name__ == '__main__':
     unittest.main()
