@@ -1,6 +1,7 @@
 
 from org.hasii.pythonflask.fitbit import db
 
+
 class FitBitRecord(db.Model):
     """"""
 
