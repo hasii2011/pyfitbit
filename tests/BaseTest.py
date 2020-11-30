@@ -1,8 +1,10 @@
 
-from unittest import TestCase
 import os
 import logging
 import logging.config
+
+from unittest import TestCase
+
 
 class BaseTest(TestCase):
     """"""
@@ -12,6 +14,7 @@ class BaseTest(TestCase):
         """"""
         cls.findLoggingConfig()
         logging.config.fileConfig('logging.conf')
+
     @classmethod
     def findLoggingConfig(cls):
         """"""

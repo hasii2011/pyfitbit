@@ -1,9 +1,10 @@
 import logging
 
-from BaseTest import BaseTest
+from tests.BaseTest import BaseTest
 
 from org.hasii.pythonflask.fitbit import db
 from org.hasii.pythonflask.fitbit.models.FitBitRecord import FitBitRecord
+
 
 class DBTest(BaseTest):
     """"""
