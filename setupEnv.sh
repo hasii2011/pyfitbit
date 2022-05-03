@@ -23,7 +23,8 @@ txReset=$(tput sgr0)   	    # reset attributes
 function isValid() {
 
     if [[ $1 -gt 0 ]]; then
-        printf "${fgRed}ERROR: ${2}${txReset}\n"
+        # shellcheck disable=SC2059
+        printf "${fgRed}ERROR: ${2}${txReset} - ${3}\n"
         exit $2
     else
     	shift
@@ -33,12 +34,14 @@ function isValid() {
 }
 function loadTestDB() {
 
-	printf "${txStandout}COMING SOON!! ${txEndStand}${txReset}\n"
+    export PYTHONPATH="`pwd`"
+    cd tests
+    python -m unittest DBLoader
 }
 #
 # Assumes this script executes from root of project
-#
-source ./pyvenv-3.8.2-pyflask/bin/activate
+# Assume we are in the virtual environment
+# source ./pyvenv-3.8.2-pyflask/bin/activate
 
 cd org/hasii/pythonflask/
 export FULL_PATH=`pwd`
@@ -54,7 +57,10 @@ printf "Flask App:       ${fgWhite}%s${txReset}\n" ${FLASK_APP}
 printf "DB Path:         ${fgWhite}%s${txReset}\n" ${DB_PATH}
 printf "Log Config Path: ${fgWhite}%s${txReset}\n" ${LOG_CONFIG_PATH}
 
-rm -rf migrations
+printf "Clean up old database\n"
+rm -rfv migrations
+rm -rfv fitbit.db
+
 
 flask db init &>/dev/null
 stat=$?
@@ -78,6 +84,8 @@ while true; do
         [Yy]* ) loadTestDB;
         		break;;
         [Nn]* ) exit;;
+        # shellcheck disable=SC1085
+        # shellcheck disable=SC2059
         * ) printf "${fgRed}Please answer yes or no.\n${txReset}";;
     esac
 done
