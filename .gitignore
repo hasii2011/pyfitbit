@@ -1,7 +1,8 @@
 *.DS_Store
-/venv-pyflask/
 /migration*/
-/pyvenv-3.8.2-pyflask/
+/pyenv-3.9.9-flask/
 *.*.pyc
 /.idea/
 *.db
+*.pem
+.python-version
